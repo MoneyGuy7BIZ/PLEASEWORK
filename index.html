@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DarkOS</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #00ffc3;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #container {
+      border: 2px solid #00ffc3;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 15px #00ffc3;
+    }
+
+    input {
+      background-color: black;
+      color: #00ffc3;
+      border: 1px solid #00ffc3;
+      padding: 10px;
+      width: 90%;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #00ffc3;
+      border: none;
+      color: black;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    a {
+      color: #00ffc3;
+      font-size: 14px;
+      display: block;
+      margin-top: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    #loadingScreen, #hackPrompt {
+      display: none;
+    }
+
+    .progress-bar {
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 12px;
+      margin-top: 20px;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #00ffc3;
+      transition: width 0.3s ease;
+    }
+
+    @media (max-width: 500px) {
+      #container {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <div id="loginScreen">
+      <h2>Access DarkOS</h2>
+      <input type="text" value="Money Guy7" disabled><br>
+      <input type="password" id="password" placeholder="Enter password"><br>
+      <button onclick="startLogin()">Sign In</button>
+      <a onclick="enterFullscreen()">Enter Fullscreen</a>
+    </div>
+
+    <div id="loadingScreen">
+      <p id="loadingText">Establishing Secure Connection...</p>
+      <div class="progress-bar"><div class="progress" id="progressBar"></div></div>
+    </div>
+
+    <div id="hackPrompt">
+      <p>What do you want to hack?</p>
+      <ul style="font-size: 14px; text-align: left; padding-left: 0; list-style: none;">
+        <li>- Bank</li>
+        <li>- Government</li>
+        <li>- School</li>
+        <li>- Crypto Wallet</li>
+        <li>- Wi-Fi</li>
+        <li>- Hospital</li>
+      </ul>
+      <input id="hackTarget" placeholder="Type an option from above..."><br>
+      <button onclick="selectHack()">Execute</button>
+    </div>
+  </div>
+
+  <script>
+    function enterFullscreen() {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+    }
+
+    function startLogin() {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("loadingScreen").style.display = "block";
+
+      const messages = [
+        "Establishing Secure Connection...",
+        "Verifying Identity...",
+        "Accessing Mainframe...",
+        "Decrypting Interface...",
+        "Ready."
+      ];
+
+      let index = 0;
+      let progress = 0;
+
+      const interval = setInterval(() => {
+        if (index < messages.length) {
+          document.getElementById("loadingText").innerText = messages[index];
+          index++;
+          progress += 20;
+          document.getElementById("progressBar").style.width = progress + "%";
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            document.getElementById("loadingScreen").style.display = "none";
+            document.getElementById("hackPrompt").style.display = "block";
+          }, 1000);
+        }
+      }, 1000);
+    }
+
+    function selectHack() {
+      const value = document.getElementById("hackTarget").value.trim();
+      if (!value) return alert("You must type one of the options above.");
+      alert("Launching protocol for: " + value);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") document.exitFullscreen();
+    });
+  </script>
+
+</body>
+</html>
